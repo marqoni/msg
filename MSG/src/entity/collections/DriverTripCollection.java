@@ -15,6 +15,7 @@ public class DriverTripCollection {
 	
 	public void addDriverTrip(DriverTrip driverTrip) {
 		listOfDriverTrips.add(driverTrip);
+		}
 	}
 
-}
+

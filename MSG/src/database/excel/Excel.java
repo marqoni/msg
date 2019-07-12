@@ -62,8 +62,9 @@ public final class Excel {
 //	      }
 //	      fis.close();
 //	}
+	String driverName = "test_driver";
 	
-	public DriverTripCollection getDriverTrips(String tripId) throws IOException  {
+	public DriverTripCollection getDriverTrips(String driverName) throws IOException  {
 		DriverTripCollection listOfDriverTrips = new DriverTripCollection();
 		FileInputStream fis;
 	
@@ -91,16 +92,17 @@ public final class Excel {
 		return listOfDriverTrips;
 	} 
 	
-	private DriverTrip getDriverTripFromRow(XSSFRow row) {
+	private DriverTrip getDriverTripFromRow(XSSFRow row) {	
 		Iterator < Cell >  cellIterator = row.cellIterator();
-		
-        String tripId = "", driverId = "";
+		String tripId = "", driverId = "";
         Date startTime = null;
         Date endTime = null;                
         int i = 0;        
        
-        while (cellIterator.hasNext() && i < 4 ) { 
+        while (cellIterator.hasNext() && i < 4 ) {
+        	
            Cell cell = cellIterator.next();
+           
            switch (i) {
               case 0:
                  tripId = cell.getStringCellValue();
@@ -115,12 +117,20 @@ public final class Excel {
             	  endTime = DateUtil.getJavaDate((double)cell.getNumericCellValue());
             	  break;
            } 
+           
+           if(driverId != null && i == 3) {
+        	   
+        	   if(driverId == "test_driver") {
+        	   System.out.println("132");
+        	   continue;}
+           }
+           
            i++;
+
         } 
         
         return new DriverTrip(tripId, driverId, startTime, endTime);
 	}
-	
 	
 	public TripInfoCollection getCheckpoints(String tripId) throws IOException  {
 		TripInfoCollection listOfCheckpointsByTrip = new TripInfoCollection();
@@ -149,7 +159,6 @@ public final class Excel {
 	      
 		return listOfCheckpointsByTrip;
 	}
-
 
 	private TripInfo getTripCheckpointsFromRow(XSSFRow row) {
 		Iterator < Cell >  cellIterator = row.cellIterator();
@@ -184,5 +193,4 @@ public final class Excel {
         return new TripInfo(ID, tripId, offsetX, offsetY, startTime);
 	}
 	
-
 }

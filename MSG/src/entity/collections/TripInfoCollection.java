@@ -10,7 +10,7 @@ public class TripInfoCollection {
 	private List<TripInfo> listOfCheckpointsByTrip;
 
 	public TripInfoCollection() {
-		ArrayList<TripInfo> listOfCheckpointsByTrip = new ArrayList<TripInfo>();
+		listOfCheckpointsByTrip = new ArrayList<TripInfo>();
 	}
 	
 	public void addTripCheckpoint(TripInfo tripInfo) {
