@@ -24,7 +24,8 @@ public final class MainController {
 		this.excel =  new Excel(fileName);
 		try {
 //			this.excel.connectToExcel();
-			this.excel.getDriverTrips("test_driver");
+//			this.excel.getDriverTrips("test_driver");
+			this.excel.getCheckpoints("trip01");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
