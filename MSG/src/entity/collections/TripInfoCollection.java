@@ -17,4 +17,18 @@ public class TripInfoCollection {
 		listOfCheckpointsByTrip.add(tripInfo);
 	}
 
+public void test(){
+    for (TripInfo ti: this.listOfCheckpointsByTrip) {
+        System.out.println(ti);
+    }
+}
+    
+public void mergeList(TripInfoCollection tic) {
+    this.listOfCheckpointsByTrip.addAll(tic.getListOfCheckpointsByTrip());
+}
+
+public List<TripInfo> getListOfCheckpointsByTrip() {
+    return listOfCheckpointsByTrip;    
+}
+
 }

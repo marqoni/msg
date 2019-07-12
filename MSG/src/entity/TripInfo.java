@@ -42,10 +42,11 @@ public final class TripInfo {
 	public Date getStartTime() {
 		return startTime;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "TripInfo [ ID= " + ID +" tripId=" + tripId + ", offsetX" + offsetX + ", offsetY=" + offsetY +", startTime=" + startTime + "]";
+		return "TripInfo [ID=" + ID + ", tripId=" + tripId + ", offsetX=" + offsetX + ", offsetY=" + offsetY
+				+ ", startTime=" + startTime + "]";
 	}
 
 

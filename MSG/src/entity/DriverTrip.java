@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.Date;
+import java.util.List;
 
 public final class DriverTrip {
 	
@@ -35,6 +36,8 @@ public final class DriverTrip {
 	public Date getEndTime() {
 		return endTime;
 	}
+	
+	
 
 	@Override
 	public String toString() {

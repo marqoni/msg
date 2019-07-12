@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 
 import database.excel.Excel;
 import database.sqlite.SQLite;
+import entity.collections.DriverTripCollection;
+import entity.collections.TripInfoCollection;
 
 public final class MainController {
 	
@@ -24,8 +26,16 @@ public final class MainController {
 		this.excel =  new Excel(fileName);
 		try {
 //			this.excel.connectToExcel();
-			this.excel.getDriverTrips("test_driver");
+//			DriverTripCollection dtc = this.excel.getDriverTrips("test_driver");
+//			this.excel.getDriverTrips("test_driver");
 //			this.excel.getCheckpoints(fileName);
+			
+			DriverTripCollection dtc = this.excel.getDriverTrips("test_driver");
+            TripInfoCollection tic = new TripInfoCollection();
+            for (int i = 0; i < dtc.getListOfDriverTrips().size(); i++) {
+            	tic.mergeList(this.excel.getCheckpoints(dtc.getListOfDriverTrips().get(i).getDriverId()));
+            }
+            tic.test();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

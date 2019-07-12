@@ -31,7 +31,6 @@ public final class Excel {
 		this.fileName = fileName;
 	}
 	
-
 //	public void connectToExcel() throws IOException {
 //		FileInputStream fis = new FileInputStream(new File(this.fileName));
 //	      
@@ -62,9 +61,9 @@ public final class Excel {
 //	      }
 //	      fis.close();
 //	}
-	String driverName = "test_driver";
+
 	
-	public DriverTripCollection getDriverTrips(String tripId) throws IOException  {
+	public DriverTripCollection getDriverTrips(String fileName) throws IOException  {
 		DriverTripCollection listOfDriverTrips = new DriverTripCollection();
 		FileInputStream fis;
 	
@@ -80,7 +79,7 @@ public final class Excel {
 		        	 continue;
 		         }
 		         DriverTrip driverTrip = getDriverTripFromRow(row);
-		         if(driverTrip.getDriverId().equals(driverName)){
+		         if(driverTrip.getDriverId().equals(fileName)){
 		    		 listOfDriverTrips.addDriverTrip(driverTrip); //add
 		         }
 
@@ -94,10 +93,6 @@ public final class Excel {
 	      
 		return listOfDriverTrips;
 	} 
-	
-	
-	
-	
 	
 	private DriverTrip getDriverTripFromRow(XSSFRow row) {	
 		Iterator < Cell >  cellIterator = row.cellIterator();
