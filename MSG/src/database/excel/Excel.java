@@ -82,15 +82,13 @@ public final class Excel {
 		         if(driverTrip.getDriverId().equals(fileName)){
 		    		 listOfDriverTrips.addDriverTrip(driverTrip); //add
 		         }
-
-		         System.out.println(driverTrip);
 		      }
 		      fis.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw e;
 		}
-	      
+	    System.out.println("REZ"+listOfDriverTrips);
 		return listOfDriverTrips;
 	} 
 	
@@ -146,14 +144,13 @@ public final class Excel {
 		         if(tripInfo.getTripId().equals(tripId)){
 		    		 listOfCheckpointsByTrip.addTripCheckpoint(tripInfo); //add
 		         }
-		         System.out.println(tripInfo);
 		      }
 		      fis.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw e;
 		}
-	      
+	    System.out.println(listOfCheckpointsByTrip+"------"+ tripId);
 		return listOfCheckpointsByTrip;
 	}
 

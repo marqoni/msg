@@ -7,21 +7,30 @@ import entity.DriverTrip;
 import entity.TripInfo;
 
 public class DriverTripCollection {
-	
+
 	private List<DriverTrip> listOfDriverTrips;
 
 	public DriverTripCollection() {
 		listOfDriverTrips = new ArrayList<DriverTrip>();
 	}
-	
+
 	public void addDriverTrip(DriverTrip driverTrip) {
 		listOfDriverTrips.add(driverTrip);
+	}
+
+	public List<DriverTrip> getListOfDriverTrips() {
+		return listOfDriverTrips;
+	}
+
+	@Override
+	public String toString() {
+		String value = "";
+		for (DriverTrip driverTrip : listOfDriverTrips) {
+			value += driverTrip.toString()+"\n";
 		}
+		return value;
+	}
 	
-
-public List<DriverTrip> getListOfDriverTrips() {
-    return listOfDriverTrips;
-}
-
+	
 
 }

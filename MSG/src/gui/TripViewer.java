@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.Controller;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.BoxLayout;
@@ -25,27 +28,10 @@ public class TripViewer extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	private Controller controller;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TripViewer frame = new TripViewer();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public TripViewer() {
+	public TripViewer(Controller controller) {
+		this.controller = controller;
 		setResizable(false);
 		setTitle("TripViewer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,6 +66,15 @@ public class TripViewer extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				String driverId = textField.getText();
+//				validiraj da nije prazno
+				String type = choice.getSelectedItem();
+				String outputFileName = textField_1.getText();
+//				validiraj 
+				controller.generateMap(driverId, type, outputFileName);
+				
+				
 			}
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);

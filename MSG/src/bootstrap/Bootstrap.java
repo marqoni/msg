@@ -14,6 +14,6 @@ public final class Bootstrap {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		MainController mainController = new MainController();
+		MainController mainController = new MainController(args[0],args[1]);
 	}
 }
