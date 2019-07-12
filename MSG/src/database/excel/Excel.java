@@ -64,7 +64,7 @@ public final class Excel {
 //	}
 	String driverName = "test_driver";
 	
-	public DriverTripCollection getDriverTrips(String driverName) throws IOException  {
+	public DriverTripCollection getDriverTrips(String tripId) throws IOException  {
 		DriverTripCollection listOfDriverTrips = new DriverTripCollection();
 		FileInputStream fis;
 	
@@ -80,7 +80,10 @@ public final class Excel {
 		        	 continue;
 		         }
 		         DriverTrip driverTrip = getDriverTripFromRow(row);
-		         listOfDriverTrips.addDriverTrip(driverTrip); //add
+		         if(driverTrip.getDriverId().equals(driverName)){
+		    		 listOfDriverTrips.addDriverTrip(driverTrip); //add
+		         }
+
 		         System.out.println(driverTrip);
 		      }
 		      fis.close();
@@ -91,6 +94,10 @@ public final class Excel {
 	      
 		return listOfDriverTrips;
 	} 
+	
+	
+	
+	
 	
 	private DriverTrip getDriverTripFromRow(XSSFRow row) {	
 		Iterator < Cell >  cellIterator = row.cellIterator();
@@ -118,13 +125,6 @@ public final class Excel {
             	  break;
            } 
            
-           if(driverId != null && i == 3) {
-        	   
-        	   if(driverId == "test_driver") {
-        	   System.out.println("132");
-        	   continue;}
-           }
-           
            i++;
 
         } 
@@ -148,7 +148,9 @@ public final class Excel {
 		        	 continue;
 		         }
 		         TripInfo tripInfo = getTripCheckpointsFromRow(row);
-		         listOfCheckpointsByTrip.addTripCheckpoint(tripInfo); //add
+		         if(tripInfo.getTripId().equals(tripId)){
+		    		 listOfCheckpointsByTrip.addTripCheckpoint(tripInfo); //add
+		         }
 		         System.out.println(tripInfo);
 		      }
 		      fis.close();
