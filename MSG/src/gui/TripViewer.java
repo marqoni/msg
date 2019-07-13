@@ -68,13 +68,10 @@ public class TripViewer extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				String driverId = textField.getText();
-//				validiraj da nije prazno
 				String type = choice.getSelectedItem();
 				String outputFileName = textField_1.getText();
-//				validiraj 
 				controller.generateMap(driverId, type, outputFileName);
-				
-				
+					
 			}
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);

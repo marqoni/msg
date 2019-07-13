@@ -39,6 +39,7 @@ public final class SQLite {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			DateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.ENGLISH);
+
 			while (rs.next()) {
 				TripInfo  ti = new TripInfo(
 						Double.parseDouble( rs.getString("ID")), 
@@ -51,11 +52,11 @@ public final class SQLite {
 						+ rs.getString("START_TS") + "\t" + rs.getString("END_TS") + "\t" + rs.getString("X") + "\t"
 						+ rs.getString("Y") + "\t" + rs.getString("TS"));
 				tic.addTripCheckpoint(ti);
-			}
-
+				
+			}			
+			
 			conn.close();
 		}
-		System.out.println(tic);
 		return tic;
 	}
 	

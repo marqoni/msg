@@ -31,38 +31,6 @@ public final class Excel {
 		this.fileName = fileName;
 	}
 	
-//	public void connectToExcel() throws IOException {
-//		FileInputStream fis = new FileInputStream(new File(this.fileName));
-//	      
-//	      XSSFWorkbook workbook = new XSSFWorkbook(fis);
-//	      XSSFSheet spreadsheet = workbook.getSheetAt(0);
-//	      Iterator <Row>  rowIterator = spreadsheet.iterator();
-//	      
-//	      XSSFRow row;
-//	      while (rowIterator.hasNext()) {
-//	         row = (XSSFRow) rowIterator.next();
-//	         Iterator < Cell >  cellIterator = row.cellIterator();
-//	         int i = 0;
-//	         while ( cellIterator.hasNext()) {
-//	            Cell cell = cellIterator.next();
-//	            
-//	            switch (cell.getCellType()) {
-//	               case NUMERIC:
-//	                  System.out.print(cell.getNumericCellValue() + " \t\t NUM i= "+i);
-//	                  break;
-//	               
-//	               case STRING:
-//	                  System.out.print(cell.getStringCellValue() + " \t\t STRING i= "+i);
-//	                  break;
-//	            }
-//	            i++;
-//	         }
-//	         System.out.println();
-//	      }
-//	      fis.close();
-//	}
-
-	
 	public DriverTripCollection getDriverTrips(String fileName) throws IOException  {
 		DriverTripCollection listOfDriverTrips = new DriverTripCollection();
 		FileInputStream fis;
@@ -88,7 +56,7 @@ public final class Excel {
 			e.printStackTrace();
 			throw e;
 		}
-	    System.out.println("REZ"+listOfDriverTrips);
+//	    System.out.println(listOfDriverTrips);
 		return listOfDriverTrips;
 	} 
 	
@@ -117,11 +85,9 @@ public final class Excel {
             	  endTime = DateUtil.getJavaDate((double)cell.getNumericCellValue());
             	  break;
            } 
-           
            i++;
-
         } 
-        
+       
         return new DriverTrip(tripId, driverId, startTime, endTime);
 	}
 	
@@ -150,7 +116,6 @@ public final class Excel {
 			e.printStackTrace();
 			throw e;
 		}
-	    System.out.println(listOfCheckpointsByTrip+"------"+ tripId);
 		return listOfCheckpointsByTrip;
 	}
 

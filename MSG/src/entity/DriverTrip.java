@@ -37,14 +37,11 @@ public final class DriverTrip {
 		return endTime;
 	}
 	
-	
 
 	@Override
 	public String toString() {
 		return "DriverTrip [tripId=" + tripId + ", driverId=" + driverId + ", startTime=" + startTime + ", endTime="
 				+ endTime + "]";
 	}
-	
-	
 	
 }

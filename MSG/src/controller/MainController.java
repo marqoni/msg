@@ -1,34 +1,40 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Iterator;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.apache.commons.io.FileUtils;
+
 import controller.helper.FileTypeExtension;
 import database.excel.Excel;
 import database.sqlite.SQLite;
+import entity.TripInfo;
 import entity.collections.DriverTripCollection;
 import entity.collections.TripInfoCollection;
 import gui.TripViewer;
+
 
 public final class MainController implements Controller {
 
 	private Excel excel;
 	private JFrame gui;
 	private SQLite sqlLite;
-	String output, input;
+	String pathToOutputFile, pathToInputFile;
 	boolean isSqlLite = false;
 
-	public MainController(String input, String output) {
-		this.output = output.trim();
-		System.out.println(output);
-		this.input = input.trim();
-		System.out.println(input);
+	public MainController(String pathToInputFile, String pathToOutputFile) {
+		this.pathToOutputFile = pathToOutputFile.trim();
+		System.out.println(pathToOutputFile);
+		this.pathToInputFile = pathToInputFile.trim();
+		System.out.println(pathToInputFile);
 		checkIfInputFileType();
-		
 		initGui();
 	}
 
@@ -41,25 +47,26 @@ public final class MainController implements Controller {
 			TripInfoCollection tc = null;
 			if (this.isSqlLite) {
 				tc = this.sqlLite.getCheckpoints(driverId);
-				// logic for DB
 			} else {
 				DriverTripCollection dtc = getDriverTripsByDriverId(driverId);
 				tc = getTripInfoCollectionByDriverTripCollection(dtc);
 			}
-			if (type == "PNG") {
+
+			if (type == "Png") {
 
 			} else {
-				// text gen
+				
+			FileUtils.writeStringToFile(new File(pathToOutputFile+"\\"+outputFileName+".txt"), tc.toString(), Charset.defaultCharset());
 			}
 		} catch (IOException | ClassNotFoundException | SQLException | NumberFormatException | ParseException e) {
 			e.printStackTrace();
 			this.showJframeMessageError(e.getMessage());
 		}
-		this.showJFrameMessageSucsess("Operation sucessful");
+		this.showJFrameMessageSucsess("Operation successful.");
 	}
 
 	private void checkIfInputFileType() {
-		String fileTypeExtension = FileTypeExtension.getFileTypeExtension(this.input);
+		String fileTypeExtension = FileTypeExtension.getFileTypeExtension(this.pathToInputFile);
 		switch (fileTypeExtension) {
 		case "xlsx":
 			initExcel();
@@ -68,17 +75,17 @@ public final class MainController implements Controller {
 			initDatabase();
 			break;
 		default:
-			throw new IllegalArgumentException("Unexpected file extension");
+			throw new IllegalArgumentException("Unexpected file extension.");
 		}
 	}
 
 	private void initDatabase() {
-		this.sqlLite = new SQLite(this.input);
+		this.sqlLite = new SQLite(this.pathToInputFile);
 		isSqlLite = true;
 	}
 
 	private void initExcel() {
-		this.excel = new Excel(this.input);
+		this.excel = new Excel(this.pathToInputFile);
 	}
 
 	private DriverTripCollection getDriverTripsByDriverId(String driverId) throws IOException {
@@ -86,7 +93,7 @@ public final class MainController implements Controller {
 			return this.excel.getDriverTrips(driverId);
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw e; // custom made msg
+			throw e; 
 		}
 	}
 
@@ -100,7 +107,7 @@ public final class MainController implements Controller {
 			return tic;
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw e; // custom made msg
+			throw e; 
 		}
 	}
 
@@ -112,11 +119,11 @@ public final class MainController implements Controller {
 	}
 
 	private void showJframeMessageError(String message) {
-		JOptionPane.showMessageDialog(this.gui, message, "Error", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(this.gui, message, "Error.", JOptionPane.ERROR_MESSAGE);
 
 	}
 	
 	private void showJFrameMessageSucsess(String message) {
-		JOptionPane.showMessageDialog (this.gui, message, "Sucess", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog (this.gui, message, "Success.", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
