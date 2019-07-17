@@ -14,13 +14,17 @@ public final class TripInfo {
 	
 	private Date startTime;
 	
-	public TripInfo(double ID, String tripId, String offsetX, String offsetY, Date startTime) {
+	private String characterSign;
+	
+	public TripInfo(double ID, String tripId, String offsetX, String offsetY, Date startTime, String characterSign) {
 		super();
 		this.ID = ID;
 		this.tripId = tripId;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
 		this.startTime = startTime;
+		this.characterSign = characterSign;
+		
 	}
 	
 	public double ID() {
@@ -42,12 +46,21 @@ public final class TripInfo {
 	public Date getStartTime() {
 		return startTime;
 	}
+	
+	public String getCharacterSign() {
+		return characterSign;
+	}
+	
+	
+	public void setCharacterSign(String characterSign) {
+		this.characterSign = characterSign;
+	}
 
 	@Override
 	public String toString() {
 		return "TripInfo [ID=" + ID + ", tripId=" + tripId + ", offsetX=" + offsetX + ", offsetY=" + offsetY
-				+ ", startTime=" + startTime + "]";
+				+ ", startTime=" + startTime + ", characterSign=" + characterSign + "]";
 	}
 
-
+// 
 }

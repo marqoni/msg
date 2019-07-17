@@ -18,8 +18,8 @@ import database.sqlite.SQLite;
 import entity.TripInfo;
 import entity.collections.DriverTripCollection;
 import entity.collections.TripInfoCollection;
+import entity.map.text.TextMatrix;
 import gui.TripViewer;
-
 
 public final class MainController implements Controller {
 
@@ -55,8 +55,27 @@ public final class MainController implements Controller {
 			if (type == "Png") {
 
 			} else {
+				System.out.println(tc.toString());
 				
-			FileUtils.writeStringToFile(new File(pathToOutputFile+"\\"+outputFileName+".txt"), tc.toString(), Charset.defaultCharset());
+				String output = "";
+				TextMatrix tm = new TextMatrix(100, 100);
+				for (int i = 0; i < tc.getListOfCheckpointsByTrip().size(); i++) {
+					output += tc.getListOfCheckpointsByTrip().get(i).getTripId() + " ("
+							+ tc.getListOfCheckpointsByTrip().get(i).getOffsetX() + ","
+							+ tc.getListOfCheckpointsByTrip().get(i).getOffsetY() + ")"+System.lineSeparator();
+					tm.setValue(
+							(int)Double.parseDouble(tc.getListOfCheckpointsByTrip().get(i).getOffsetX()),
+							(int)Double.parseDouble(tc.getListOfCheckpointsByTrip().get(i).getOffsetY()),
+							tc.getListOfCheckpointsByTrip().get(i).getCharacterSign()
+							);
+				}
+//				System.out.println(pathToOutputFile + "\\" + outputFileName + ".txt" + output);
+				
+				FileUtils.writeStringToFile(new File(
+						pathToOutputFile + "\\" + outputFileName + ".txt"),
+						tm.getMatrixAsText(),
+						Charset.defaultCharset()
+						);
 			}
 		} catch (IOException | ClassNotFoundException | SQLException | NumberFormatException | ParseException e) {
 			e.printStackTrace();
@@ -93,7 +112,7 @@ public final class MainController implements Controller {
 			return this.excel.getDriverTrips(driverId);
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw e; 
+			throw e;
 		}
 	}
 
@@ -107,7 +126,7 @@ public final class MainController implements Controller {
 			return tic;
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw e; 
+			throw e;
 		}
 	}
 
@@ -122,8 +141,8 @@ public final class MainController implements Controller {
 		JOptionPane.showMessageDialog(this.gui, message, "Error.", JOptionPane.ERROR_MESSAGE);
 
 	}
-	
+
 	private void showJFrameMessageSucsess(String message) {
-		JOptionPane.showMessageDialog (this.gui, message, "Success.", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this.gui, message, "Success.", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

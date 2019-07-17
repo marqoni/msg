@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.streaming.SXSSFRow.CellIterator;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -100,18 +101,32 @@ public final class Excel {
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
 		      XSSFSheet spreadsheet = workbook.getSheetAt(1);
 		      Iterator <Row>  rowIterator = spreadsheet.iterator();
-		      XSSFRow row;		      
+		      XSSFRow row;	
+		      String previousRowTripId = "";
+		      
+		      char alphabet =  'A';
+		      
 		      while (rowIterator.hasNext()) {
 		         row = (XSSFRow) rowIterator.next();
 		         if(row.getRowNum() == 0) {
 		        	 continue;
 		         }
-		         TripInfo tripInfo = getTripCheckpointsFromRow(row);
+		         TripInfo tripInfo = getTripCheckpointsFromRow(row);         
+			         
 		         if(tripInfo.getTripId().equals(tripId)){
-		    		 listOfCheckpointsByTrip.addTripCheckpoint(tripInfo); //add
-		         }
+		        	 tripInfo.setCharacterSign(String.valueOf(alphabet));
+		    		  //add
+		         } else if ((tripInfo.getTripId().equals(previousRowTripId))) {
+		         tripInfo.setCharacterSign(String.valueOf(alphabet));	    		 
+		         }	else {		        	 
+		        	 tripInfo.setCharacterSign(String.valueOf(alphabet));
+		         }	         		         
+		         listOfCheckpointsByTrip.addTripCheckpoint(tripInfo);		         
+		         previousRowTripId = tripInfo.getTripId();
 		      }
 		      fis.close();
+		      
+		      
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw e;
@@ -120,21 +135,20 @@ public final class Excel {
 	}
 
 	private TripInfo getTripCheckpointsFromRow(XSSFRow row) {
-		Iterator < Cell >  cellIterator = row.cellIterator();
-		
+		Iterator < Cell >  cellIterator = row.cellIterator();		
         double ID = 0;
-        String tripId = "", offsetX = "", offsetY = "";
-        Date startTime = null;               
-        int i = 0;        
-       
-        while (cellIterator.hasNext() && i < 5 ) { 
+        String tripId = "", offsetX = "", offsetY = "", characterSign = "";
+        Date startTime = null;  
+        int i = 0;               
+        while (cellIterator.hasNext() && i < 5 ) {        	     	
            Cell cell = cellIterator.next();
+                                  
            switch (i) {
               case 0:
                  ID = cell.getNumericCellValue();
                  break;
               case 1:
-                 tripId = cell.getStringCellValue();
+            	 tripId = cell.getStringCellValue();           		
                  break;
               case 2:
             	  offsetX = cell.toString();
@@ -144,12 +158,12 @@ public final class Excel {
                   break;
               case 4:
             	  startTime = DateUtil.getJavaDate((double)cell.getNumericCellValue());
-            	  break;
+            	  break;                  
            } 
-           i++;
-        } 
+           i++;          
+        }
         
-        return new TripInfo(ID, tripId, offsetX, offsetY, startTime);
+        return new TripInfo(ID, tripId, offsetX, offsetY, startTime, characterSign);
 	}
 	
 }
